@@ -9,16 +9,22 @@ form.addEventListener('submit', async function (e) {
             userInfo[el.name] = el.value;
         }
     }
-    console.log(userInfo);
+    // console.log(userInfo);
 
-    // await fetch({
-    //     method: "POST",
-    //     url: "http://localhost:3000/login",
-    //     data: userInfo,
-    //     headers: { "Content-Type": "application/json" }
-    // });
+    var user = await fetch("http://localhost:3000/users/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+    }).then(function (response) {
+        return response.json();
+    });
 
     // handle success
-    console.log('OK');
+    // console.log('OK', user);
+
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    window.location = 'index.html';
 
 })

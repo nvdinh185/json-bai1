@@ -8,7 +8,7 @@ if (localStorage.getItem('currentUser')) {
         var listUsers = await fetch('http://localhost:3000/users')
             .then(function (response) {
                 return response.json();
-            });;
+            });
 
         for (const user of listUsers) {
             var trElement = document.createElement('tr');
