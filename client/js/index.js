@@ -26,6 +26,17 @@ if (localStorage.getItem('currentUser')) {
         }
     })()
 
+    var currentUser = localStorage.getItem('currentUser');
+    currentUser = JSON.parse(currentUser);
+    var greetingElement = document.getElementById('greeting');
+    greetingElement.innerText = 'Xin chào : ' + currentUser.fullname;
+
+    var logoutElement = document.getElementById('logout');
+    logoutElement.onclick = function () {
+        localStorage.removeItem('currentUser');
+        location.reload();
+    }
+
 } else {
     // Nếu chưa login thì chuyển hướng sang trang login.html
     window.location = 'login.html';

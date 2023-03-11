@@ -11,9 +11,7 @@ db.serialize();
 module.exports = {
     getListUsers,
     postLogin,
-    // getNewsDetail,
-    // getCategories,
-    // postContact
+    postUpdate
 }
 
 async function getListUsers() {
@@ -51,31 +49,10 @@ async function postLogin(body) {
     }
 }
 
-async function getNewsDetail(query) {
-    const newsDetail = await new Promise((resolve, reject) => {
-        db.each(`SELECT * FROM news WHERE id = ${query.dId}`, (err, row) => {
-            if (err) reject(err);
-            resolve(row);
-        })
-    })
-    return newsDetail;
-}
-
-async function getCategories() {
-    const listCats = await new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM categories`, (err, row) => {
-            if (err) reject(err);
-            resolve(row);
-        })
-    })
-    return listCats;
-}
-
-async function postContact(contact) {
+async function postUpdate(formData) {
     return new Promise((resolve, reject) => {
-        db.run(`INSERT INTO contacts (name, phone, web, gender, picture, content) VALUES (?, ?, ?, ?, ?, ?)`,
-            [contact.name, contact.phone, contact.web,
-            contact.gender, contact.file, contact.content], function (err) {
+        db.run(`UPDATE users SET email = ?, fullname = ?, avatar = ? WHERE id = ?`,
+            [formData.email, formData.fullname, formData.file, formData.id], function (err) {
                 if (err) {
                     reject(new Error(err.message));
                 }

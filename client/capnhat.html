@@ -16,15 +16,15 @@
 			<div class="login-main login-agileits">
 				<p style='color: red; background-color: yellow; font-weight: bold; font-style: italic'>123</p>
 				<div class="userinfo" style="margin-bottom:20px;">
-					<p class="fullname">Cập nhật thông tin cho : </p>
+					<p class="fullname" id="fullname"></p>
 				</div>
 
-				<form method="post" enctype="multipart/form-data">
+				<form action="" id="update-form">
 					<table class="update-user" border="1" width="500px" align="center">
 						<tr align="center">
 							<th>Email</th>
 							<td>
-								<input type="text" value="" name="username" class="input-u" />
+								<input type="text" value="" name="email" class="input-u" />
 							</td>
 						</tr>
 
@@ -51,6 +51,8 @@
 			</div>
 		</div>
 	</div>
+	<script src="lib/axios.min.js"></script>
+	<script src="js/update.js"></script>
 </body>
 
 </html>
