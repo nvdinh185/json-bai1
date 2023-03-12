@@ -13,10 +13,8 @@ form.addEventListener('submit', async function (e) {
 
     var user = await fetch("http://localhost:3000/users/login", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userInfo)
     }).then(function (response) {
         return response.json();
     });

@@ -1,24 +1,28 @@
-if (localStorage.getItem('currentUser')) {
+var currentUser = localStorage.getItem('currentUser');
+currentUser = JSON.parse(currentUser);
+if (currentUser) {
 
     (async () => {
         var tblElement = document.getElementById('tbl');
 
         var bodyElement = tblElement.getElementsByTagName('tbody')[0];
 
-        var listUsers = await fetch('http://localhost:3000/users')
-            .then(function (response) {
-                return response.json();
-            });
+        var listUsers = await axios({
+            method: "GET",
+            url: "http://localhost:3000/users",
+            headers: { Authorization: `Bearer ${currentUser.token}` },
+        });
+        listUsers = listUsers.data;
 
         for (const user of listUsers) {
             var trElement = document.createElement('tr');
             trElement.innerHTML =
                 `<tr>
-                <td>${user.id}</td>
-                <td>${user.email}</td>
-                <td><img src="${user.avatar}" alt="" width="100px" height="100px" /></td>
-                <td>${user.fullname}</td>
-            </tr>`;
+                    <td>${user.id}</td>
+                    <td>${user.email}</td>
+                    <td><img src="${user.avatar}" alt="" width="100px" height="100px" /></td>
+                    <td>${user.fullname}</td>
+                </tr>`;
             trElement.setAttribute('align', 'center');
 
             bodyElement.appendChild(trElement);
@@ -26,8 +30,6 @@ if (localStorage.getItem('currentUser')) {
         }
     })()
 
-    var currentUser = localStorage.getItem('currentUser');
-    currentUser = JSON.parse(currentUser);
     var greetingElement = document.getElementById('greeting');
     greetingElement.innerText = 'Xin chào : ' + currentUser.fullname;
 

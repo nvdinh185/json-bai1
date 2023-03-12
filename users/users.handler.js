@@ -1,6 +1,5 @@
 ﻿const config = require('../config.json');
 const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
 
 const sqlite3 = require('sqlite3').verbose();
 const dbFile = './database/users.db';
@@ -15,33 +14,33 @@ module.exports = {
 }
 
 async function getListUsers() {
-    const listNews = await new Promise((resolve, reject) => {
+    const listUsers = await new Promise((resolve, reject) => {
         db.all(`SELECT * FROM users`, (err, row) => {
             if (err) reject(err);
             resolve(row);
         })
     })
-    return listNews;
+    return listUsers;
 }
 
 async function postLogin(body) {
     try {
-        const user = await new Promise((resolve, reject) => {
+        const users = await new Promise((resolve, reject) => {
             db.all(`SELECT * FROM users WHERE email = '${body.email}' AND password = '${body.password}'`, (err, row) => {
                 if (err) reject(err);
                 resolve(row);
             })
         })
-        // console.log(user);
-        if (user && user[0]) {
-            const token = jwt.sign({ id: user[0].id, role: user[0].role }, config.secret);
-            const { password, ...userWithoutPassword } = user[0];
+        // console.log(users);
+        if (users && users[0]) {
+            const token = jwt.sign({ id: users[0].id, role: users[0].role }, config.secret);
+            const { password, ...userWithoutPassword } = users[0];
             return {
                 ...userWithoutPassword,
                 token
             };
         } else {
-            throw new Error("Cannot find user!");
+            throw new Error("Cannot find users!");
         }
 
     } catch (error) {

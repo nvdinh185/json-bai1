@@ -5,7 +5,7 @@ const usersHandler = require('./users.handler');
 const usersMiddleware = require('./users.middleware');
 
 // routes
-router.get('/', getListUsers);
+router.get('/', usersMiddleware.authorize, getListUsers);
 
 router.post('/login', postLogin);
 router.post('/update', usersMiddleware.uploadFile, postUpdate);
@@ -14,7 +14,7 @@ module.exports = router;
 
 function getListUsers(req, res, next) {
     usersHandler.getListUsers()
-        .then(listNews => res.json(listNews))
+        .then(listUsers => res.json(listUsers))
         .catch(err => next(err));
 }
 

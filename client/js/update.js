@@ -35,6 +35,7 @@ form.addEventListener('submit', async function (e) {
     });
 
     //handle success
-    console.log('results: ', results);
+    // console.log('results: ', results);
+    window.location = 'index.html';
 
 })
