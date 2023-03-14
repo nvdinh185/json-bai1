@@ -10,19 +10,25 @@ form.addEventListener('submit', async function (e) {
         }
     }
     // console.log(userInfo);
+    try {
+        var user = await axios({
+            method: "POST",
+            url: "http://localhost:3000/users/login",
+            data: userInfo,
+            headers: { "Content-Type": "application/json" },
+        });
 
-    var user = await fetch("http://localhost:3000/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userInfo)
-    }).then(function (response) {
-        return response.json();
-    });
-
-    // handle success
-    // console.log('OK', user);
-
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    window.location = 'index.html';
-
+        // handle success
+        localStorage.setItem('currentUser', JSON.stringify(user.data));
+        window.location = 'index.html';
+    } catch (err) {
+        var errorElement = document.getElementById('error');
+        errorElement.innerText = 'Xảy ra lỗi!';
+        Object.assign(errorElement.style, {
+            display: 'block',
+            color: 'red',
+            fontStyle: 'italic',
+            fontWeight: 'bold'
+        })
+    }
 })

@@ -7,26 +7,37 @@ if (currentUser) {
 
         var bodyElement = tblElement.getElementsByTagName('tbody')[0];
 
-        var listUsers = await axios({
-            method: "GET",
-            url: "http://localhost:3000/users",
-            headers: { Authorization: `Bearer ${currentUser.token}` },
-        });
-        listUsers = listUsers.data;
+        try {
+            var listUsers = await axios({
+                method: "GET",
+                url: "http://localhost:3000/users",
+                headers: { Authorization: `Bearer ${currentUser.token}` },
+            });
+            listUsers = listUsers.data;
 
-        for (const user of listUsers) {
-            var trElement = document.createElement('tr');
-            trElement.innerHTML =
-                `<tr>
-                    <td>${user.id}</td>
-                    <td>${user.email}</td>
-                    <td><img src="${user.avatar}" alt="" width="100px" height="100px" /></td>
-                    <td>${user.fullname}</td>
-                </tr>`;
-            trElement.setAttribute('align', 'center');
+            for (const user of listUsers) {
+                var trElement = document.createElement('tr');
+                trElement.innerHTML =
+                    `<tr>
+                        <td>${user.id}</td>
+                        <td>${user.email}</td>
+                        <td><img src="${user.avatar}" alt="" width="100px" height="100px" /></td>
+                        <td>${user.fullname}</td>
+                    </tr>`;
+                trElement.setAttribute('align', 'center');
 
-            bodyElement.appendChild(trElement);
+                bodyElement.appendChild(trElement);
 
+            }
+        } catch (error) {
+            var errorElement = document.getElementById('error');
+            errorElement.innerText = 'Xảy ra lỗi!';
+            Object.assign(errorElement.style, {
+                display: 'block',
+                color: 'red',
+                fontStyle: 'italic',
+                fontWeight: 'bold'
+            })
         }
     })()
 

@@ -50,12 +50,12 @@ async function postLogin(body) {
 
 async function postUpdate(formData) {
     return new Promise((resolve, reject) => {
-        db.run(`UPDATE users SET email = ?, fullname = ?, avatar = ? WHERE id = ?`,
-            [formData.email, formData.fullname, formData.file, formData.id], function (err) {
-                if (err) {
-                    reject(new Error(err.message));
-                }
-                resolve(this.changes);
-            });
+        db.run(`UPDATE users SET email = '${formData.email}', fullname = '${formData.fullname}',
+        avatar = "${formData.file ? formData.file : 'avatar'}" WHERE id = '${formData.id}'`, function (err) {
+            if (err) {
+                reject(new Error(err.message));
+            }
+            resolve(this.changes);
+        });
     })
 }

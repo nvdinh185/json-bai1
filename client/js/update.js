@@ -20,22 +20,30 @@ form.addEventListener('submit', async function (e) {
     for (const el of e.target) {
         if (el.files) {
             formData.append("file", el.files[0]);
-            // console.log(el.files[0]);
         } else if (el.value) {
             formData.append(el.name, el.value);
-            // console.log(el.name, el.value);
         }
     }
+    try {
+        var results = await axios({
+            method: "POST",
+            url: "http://localhost:3000/users/update",
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data" },
+        });
 
-    var results = await axios({
-        method: "POST",
-        url: "http://localhost:3000/users/update",
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
-    });
-
-    //handle success
-    // console.log('results: ', results);
-    window.location = 'index.html';
-
+        //handle success
+        // console.log('results: ', results);
+        window.location = 'index.html';
+    } catch (error) {
+        var errorElement = document.getElementById('error');
+        errorElement.innerText = 'Xảy ra lỗi!';
+        Object.assign(errorElement.style, {
+            display: 'block',
+            color: 'red',
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            backgroundColor: 'yellow'
+        })
+    }
 })
