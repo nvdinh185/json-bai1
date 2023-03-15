@@ -36,7 +36,8 @@ if (currentUser) {
                 display: 'block',
                 color: 'red',
                 fontStyle: 'italic',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                backgroundColor: 'yellow'
             })
         }
     })()
