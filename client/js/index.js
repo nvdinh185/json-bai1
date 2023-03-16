@@ -31,7 +31,7 @@ if (currentUser) {
             }
         } catch (error) {
             var errorElement = document.getElementById('error');
-            errorElement.innerText = 'Xảy ra lỗi!';
+            errorElement.innerText = 'Xảy ra lỗi: ' + error;
             Object.assign(errorElement.style, {
                 display: 'block',
                 color: 'red',
@@ -45,6 +45,28 @@ if (currentUser) {
     var greetingElement = document.getElementById('greeting');
     greetingElement.innerText = 'Xin chào : ' + currentUser.fullname;
 
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    var err = getParameterByName('err');
+    if (err == 1) {
+        var errorElement = document.getElementById('error');
+        errorElement.innerText = 'Không có quyền!';
+        Object.assign(errorElement.style, {
+            display: 'block',
+            color: 'red',
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            backgroundColor: 'yellow'
+        })
+    }
+
     var logoutElement = document.getElementById('logout');
     logoutElement.onclick = function () {
         localStorage.removeItem('currentUser');
@@ -53,5 +75,5 @@ if (currentUser) {
 
 } else {
     // Nếu chưa login thì chuyển hướng sang trang login.html
-    window.location = 'login.html';
+    location = 'login.html';
 }

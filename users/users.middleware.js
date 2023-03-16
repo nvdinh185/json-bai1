@@ -65,7 +65,7 @@ function authorize(req, res, next) {
                 console.log('Lỗi xác thực:', err.message);
                 return res.status(401).json({ message: err.message });
             } else {
-                // console.log(decoded);
+                // console.log('decoded: ', decoded);
                 next();
             };
         });

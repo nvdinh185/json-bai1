@@ -20,7 +20,7 @@ form.addEventListener('submit', async function (e) {
 
         // handle success
         localStorage.setItem('currentUser', JSON.stringify(user.data));
-        window.location = 'index.html';
+        location = 'index.html';
     } catch (err) {
         var errorElement = document.getElementById('error');
         errorElement.innerText = 'Xảy ra lỗi!';

@@ -3,9 +3,6 @@ const jwt = require('jsonwebtoken');
 
 const sqlite3 = require('sqlite3').verbose();
 const dbFile = './database/users.db';
-const db = new sqlite3.Database(dbFile);
-
-db.serialize();
 
 module.exports = {
     getListUsers,
@@ -13,20 +10,32 @@ module.exports = {
     postUpdate
 }
 
-async function getListUsers() {
-    const listUsers = await new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM users`, (err, row) => {
-            if (err) reject(err);
-            resolve(row);
+async function getListUsers(req, res, next) {
+    try {
+        var db = new sqlite3.Database(dbFile);
+        db.serialize();
+
+        const listUsers = await new Promise((resolve, reject) => {
+            db.all(`SELECT * FROM users`, (err, row) => {
+                if (err) reject(err);
+                resolve(row);
+            })
         })
-    })
-    return listUsers;
+        res.json(listUsers);
+    } catch (err) {
+        next(err);
+    } finally {
+        db.close();
+    }
 }
 
-async function postLogin(body) {
+async function postLogin(req, res, next) {
     try {
+        var db = new sqlite3.Database(dbFile);
+        db.serialize();
+
         const users = await new Promise((resolve, reject) => {
-            db.all(`SELECT * FROM users WHERE email = '${body.email}' AND password = '${body.password}'`, (err, row) => {
+            db.all(`SELECT * FROM users WHERE email = '${req.body.email}' AND password = '${req.body.password}'`, (err, row) => {
                 if (err) reject(err);
                 resolve(row);
             })
@@ -35,27 +44,40 @@ async function postLogin(body) {
         if (users && users[0]) {
             const token = jwt.sign({ id: users[0].id, role: users[0].role }, config.secret);
             const { password, ...userWithoutPassword } = users[0];
-            return {
+            var result = {
                 ...userWithoutPassword,
                 token
-            };
+            }
+            res.json(result);
         } else {
             throw new Error("Cannot find users!");
         }
-
-    } catch (error) {
-        throw new Error(error);
+    } catch (err) {
+        next(err);
+    } finally {
+        db.close();
     }
 }
 
-async function postUpdate(formData) {
-    return new Promise((resolve, reject) => {
-        db.run(`UPDATE users SET email = '${formData.email}', fullname = '${formData.fullname}',
-        avatar = "${formData.file ? formData.file : 'avatar'}" WHERE id = '${formData.id}'`, function (err) {
-            if (err) {
-                reject(new Error(err.message));
-            }
-            resolve(this.changes);
-        });
-    })
+async function postUpdate(req, res, next) {
+    var formData = req.form_data;
+    try {
+        var db = new sqlite3.Database(dbFile);
+        db.serialize();
+
+        var result = await new Promise((resolve, reject) => {
+            db.run(`UPDATE users SET email = '${formData.email}', fullname = '${formData.fullname}',
+            avatar = "${formData.file ? formData.file : 'avatar'}" WHERE id = '${formData.id}'`, function (err) {
+                if (err) {
+                    reject(new Error(err.message));
+                }
+                resolve(this.changes);
+            });
+        })
+        res.json(result);
+    } catch (err) {
+        next(err);
+    } finally {
+        db.close();
+    }
 }
