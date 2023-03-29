@@ -34,16 +34,16 @@ async function postLogin(req, res, next) {
         var db = new sqlite3.Database(dbFile);
         db.serialize();
 
-        const users = await new Promise((resolve, reject) => {
-            db.all(`SELECT * FROM users WHERE email = '${req.body.email}' AND password = '${req.body.password}'`, (err, row) => {
+        const user = await new Promise((resolve, reject) => {
+            db.each(`SELECT * FROM users WHERE email = '${req.body.email}' AND password = '${req.body.password}'`, (err, row) => {
                 if (err) reject(err);
                 resolve(row);
             })
         })
-        // console.log(users);
-        if (users && users[0]) {
-            const token = jwt.sign({ id: users[0].id, role: users[0].role }, config.secret);
-            const { password, ...userWithoutPassword } = users[0];
+        // console.log(user);
+        if (user) {
+            const token = jwt.sign({ id: user.id, role: user.role }, config.secret);
+            const { password, ...userWithoutPassword } = user;
             var result = {
                 ...userWithoutPassword,
                 token

@@ -1,6 +1,6 @@
 var currentUser = localStorage.getItem('currentUser');
 currentUser = JSON.parse(currentUser);
-if (currentUser.role === 1) {
+if (currentUser && currentUser.role === 1) {
     var fullnameElement = document.getElementById('fullname');
     fullnameElement.innerText = 'Cập nhật thông tin cho : ' + currentUser.fullname;
 
