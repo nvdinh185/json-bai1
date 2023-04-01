@@ -34,17 +34,15 @@ function uploadFile(req, res, next) {
                 var oldpath = files[key].filepath;
                 var newpath = filenameStored
                 //chuyển file từ thư mục temp sang thư mục upload_files
-                try {
-                    await new Promise((resolve, reject) => {
-                        fs.rename(oldpath, newpath, err => {
-                            if (err) {
-                                reject("Error..." + err);
-                            } else {
-                                resolve('OK');
-                            }
-                        });
-                    })
-                } catch (err) { }
+                await new Promise((resolve, reject) => {
+                    fs.rename(oldpath, newpath, err => {
+                        if (err) {
+                            reject("Error..." + err);
+                        } else {
+                            resolve('OK');
+                        }
+                    });
+                })
 
                 formData[key] = filenameStored.slice(7);
             } else {
