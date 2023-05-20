@@ -1,12 +1,9 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const bodyParser = require('body-parser');
 const errorHandler = require('./_helpers/error-handler');
 
-app.use(bodyParser.json());
-const cors = require('cors');
-app.use(cors());
+app.use(express.json());
 
 const publicPath = path.join(__dirname, "client");
 app.use(express.static(publicPath));
