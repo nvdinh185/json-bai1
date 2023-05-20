@@ -1,6 +1,5 @@
 const formidable = require('formidable');
 const fs = require('fs');
-const systempath = require('path');
 const jwt = require('jsonwebtoken');
 const { secret } = require('../config.json');
 
@@ -26,7 +25,7 @@ class UsersMiddleware {
                     var fileName = files[key].originalFilename.split('.')[0];
                     var ext = files[key].originalFilename.split('.')[1];
                     //đường dẫn thực file upload lên
-                    var filenameStored = `${dirUpload}${systempath.sep}${fileName}_${Date.now()}.${ext}`;
+                    var filenameStored = `${dirUpload}/${fileName}_${Date.now()}.${ext}`;
 
                     var oldpath = files[key].filepath;
                     var newpath = filenameStored

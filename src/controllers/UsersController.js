@@ -1,61 +1,66 @@
 const config = require('../config.json');
 const jwt = require('jsonwebtoken');
 
-const sqlite3 = require('sqlite3').verbose();
-const dbFile = './src/database/users.db';
+const mysql = require('mysql');
+
+const configDB = {
+    host: "localhost",
+    user: "root",
+    password: "123456",
+    database: "users"
+};
 
 class UsersController {
 
     // [GET] /users
     async getListUsers(req, res, next) {
         try {
-            var db = new sqlite3.Database(dbFile);
-            db.serialize();
+            var conn = mysql.createConnection(configDB);
 
+            const sqlSelect = "SELECT * FROM users";
             const listUsers = await new Promise((resolve, reject) => {
-                db.all(`SELECT * FROM users`, (err, row) => {
+                conn.query(sqlSelect, function (err, results) {
                     if (err) reject(err);
-                    resolve(row);
-                })
-            })
-            res.json(listUsers);
+                    resolve(results);
+                });
+            });
+            res.status(200).send(listUsers);
         } catch (err) {
             next(err);
         } finally {
-            db.close();
+            conn.end();
         }
     }
 
     // [POST] /users/login
     async postLogin(req, res, next) {
         try {
-            var db = new sqlite3.Database(dbFile);
-            db.serialize();
+            var conn = mysql.createConnection(configDB);
 
             const user = await new Promise((resolve, reject) => {
-                db.each(`SELECT * FROM users WHERE email = '${req.body.email}' AND password = '${req.body.password}'`, (err, row) => {
+                conn.query(`SELECT * FROM users WHERE email = '${req.body.email}' AND password = '${req.body.password}'`, (err, results) => {
                     if (err) reject(err);
-                    resolve(row);
+                    resolve(results);
                 })
             })
-            // console.log(user);
-            if (user) {
-                const token = jwt.sign({ id: user.id, role: user.role }, config.secret, {
+            // console.log(user[0]);
+            if (user && user[0]) {
+                const token = jwt.sign({ id: user[0].id, role: user[0].role }, config.secret, {
                     expiresIn: '600000'//10 phút
                 });
-                const { password, ...userWithoutPassword } = user;
+                const { password, ...userWithoutPassword } = user[0];
                 var result = {
                     ...userWithoutPassword,
                     token
                 }
-                res.json(result);
+                res.status(200).send(result);
             } else {
                 throw new Error("Cannot find users!");
             }
         } catch (err) {
             next(err);
         } finally {
-            db.close();
+            conn.end();
         }
     }
 
@@ -63,23 +68,20 @@ class UsersController {
     async postUpdate(req, res, next) {
         var formData = req.form_data;
         try {
-            var db = new sqlite3.Database(dbFile);
-            db.serialize();
+            var conn = mysql.createConnection(configDB);
 
-            var result = await new Promise((resolve, reject) => {
-                db.run(`UPDATE users SET email = '${formData.email}', fullname = '${formData.fullname}',
-                avatar = "${formData.file ? formData.file : 'avatar'}" WHERE id = '${formData.id}'`, function (err) {
-                    if (err) {
-                        reject(new Error(err.message));
-                    }
-                    resolve(this.changes);
+            const result = await new Promise((resolve, reject) => {
+                conn.query(`UPDATE users SET email = '${formData.email}', fullname = '${formData.fullname}',
+                avatar = "${formData.file ? formData.file : 'avatar'}" WHERE id = '${formData.id}'`, (err, results) => {
+                    if (err) reject(err);
+                    resolve(results);
                 });
             })
-            res.json(result);
+            res.status(200).send(result);
         } catch (err) {
             next(err);
         } finally {
-            db.close();
+            conn.end();
         }
     }
 }
