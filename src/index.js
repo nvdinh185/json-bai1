@@ -1,21 +1,23 @@
 const express = require('express');
-const path = require('path');
 const app = express();
+const path = require('path');
 const errorHandler = require('./_helpers/error-handler');
 
 app.use(express.json());
 
-const publicPath = path.join(__dirname, "client");
+const publicPath = path.join(__dirname, "../client");
 app.use(express.static(publicPath));
 
-// api routes
-app.use('/users', require('./users/users.controller'));
+const route = require('./routes');
+
+// Router init
+route(app);
 
 // global error handler
 app.use(errorHandler);
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(publicPath, 'index.html'));
+    res.sendFile(path.join(publicPath, 'index.html'));
 });
 
 // start server
