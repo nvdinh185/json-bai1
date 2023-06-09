@@ -27,7 +27,7 @@ if (currentUser && currentUser.role === 1) {
         try {
             var results = await axios({
                 method: "POST",
-                url: "http://localhost:3000/users/update",
+                url: "http://localhost:3000/user/update",
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data",

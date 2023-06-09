@@ -13,7 +13,7 @@ form.addEventListener('submit', async function (e) {
     try {
         var user = await axios({
             method: "POST",
-            url: "http://localhost:3000/users/login",
+            url: "http://localhost:3000/user/login",
             data: userInfo,
             headers: { "Content-Type": "application/json" },
         });

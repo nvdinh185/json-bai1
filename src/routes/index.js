@@ -1,7 +1,7 @@
-const users = require('./users');
+const userRouter = require('./user');
 
 function route(app) {
-    app.use('/users', users);
+    app.use('/user', userRouter);
 }
 
 module.exports = route;

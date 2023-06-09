@@ -10,9 +10,9 @@ const configDB = {
     database: "users"
 };
 
-class UsersController {
+class UserController {
 
-    // [GET] /users
+    // [GET] /user
     async getListUsers(req, res, next) {
         try {
             var conn = mysql.createConnection(configDB);
@@ -32,7 +32,7 @@ class UsersController {
         }
     }
 
-    // [POST] /users/login
+    // [POST] /user/login
     async postLogin(req, res, next) {
         try {
             var conn = mysql.createConnection(configDB);
@@ -64,7 +64,7 @@ class UsersController {
         }
     }
 
-    // [POST] /users/update
+    // [POST] /user/update
     async postUpdate(req, res, next) {
         var formData = req.form_data;
         try {
@@ -86,4 +86,4 @@ class UsersController {
     }
 }
 
-module.exports = new UsersController();
+module.exports = new UserController();

@@ -10,7 +10,7 @@ if (currentUser) {
         try {
             var listUsers = await axios({
                 method: "GET",
-                url: "http://localhost:3000/users",
+                url: "http://localhost:3000/user",
                 headers: { Authorization: `Bearer ${currentUser.token}` },
             });
             listUsers = listUsers.data;

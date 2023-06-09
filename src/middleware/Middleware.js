@@ -3,7 +3,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const { secret } = require('../config.json');
 
-class UsersMiddleware {
+class Middleware {
 
     uploadFile(req, res, next) {
         const dirUpload = 'client/avatar';
@@ -67,4 +67,4 @@ class UsersMiddleware {
 
 }
 
-module.exports = new UsersMiddleware();
+module.exports = new Middleware();
