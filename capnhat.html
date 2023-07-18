@@ -5,37 +5,34 @@
 	<title>CPANEL | VinaEnter Edu</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<meta name="keywords" content="" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 </head>
 
 <body>
-	<!-- login starts here -->
 	<div class="login agile">
 		<div class="w3agile-border">
 			<h2>TRANG QUẢN TRỊ VIÊN | CẬP NHẬT THÔNG TIN NGƯỜI DÙNG</h2>
 			<div class="login-main login-agileits">
-				<p style="display: none;" id="error"></p>
 
-				<form action="" id="update-form">
-					<input type="hidden" name="id">
+				<form>
 					<table class="update-user" border="1" width="500px" align="center">
 						<tr align="center">
 							<td>Email</td>
-							<td colspan="2">
-								<input type="text" value="" name="email" class="input-u" />
+							<td>
+								<input type="text" value="" name="username" class="input-u" />
 							</td>
 						</tr>
 
 						<tr align="center">
 							<td>Fullname</td>
-							<td colspan="2">
+							<td>
 								<input type="text" value="" name="fullname" class="input-u" />
 							</td>
 						</tr>
 
 						<tr align="center">
 							<td>Avatar</td>
-							<td><img id="avatar" src="" alt="" width="100px" height="100px" /></td>
 							<td>
 								<input type="file" value="Upload file" name="avatar" class="input-u" />
 							</td>
@@ -43,15 +40,13 @@
 
 						<tr align="center">
 							<td>&nbsp;</td>
-							<td colspan="2"><button> Cập nhật thông tin</button></td>
+							<td><button> Cập nhật thông tin</button></td>
 						</tr>
 					</table>
 				</form>
 			</div>
 		</div>
 	</div>
-	<script src="lib/axios.min.js"></script>
-	<script src="js/update.js"></script>
 </body>
 
 </html>
