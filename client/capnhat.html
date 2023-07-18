@@ -15,28 +15,27 @@
 			<h2>TRANG QUẢN TRỊ VIÊN | CẬP NHẬT THÔNG TIN NGƯỜI DÙNG</h2>
 			<div class="login-main login-agileits">
 				<p style="display: none;" id="error"></p>
-				<div class="userinfo" style="margin-bottom:20px;">
-					<p class="fullname" id="fullname"></p>
-				</div>
 
 				<form action="" id="update-form">
+					<input type="hidden" name="id">
 					<table class="update-user" border="1" width="500px" align="center">
 						<tr align="center">
-							<th>Email</th>
-							<td>
+							<td>Email</td>
+							<td colspan="2">
 								<input type="text" value="" name="email" class="input-u" />
 							</td>
 						</tr>
 
 						<tr align="center">
-							<th>Fullname</th>
-							<td>
+							<td>Fullname</td>
+							<td colspan="2">
 								<input type="text" value="" name="fullname" class="input-u" />
 							</td>
 						</tr>
 
 						<tr align="center">
-							<th>Avatar</th>
+							<td>Avatar</td>
+							<td><img id="avatar" src="" alt="" width="100px" height="100px" /></td>
 							<td>
 								<input type="file" value="Upload file" name="avatar" class="input-u" />
 							</td>
@@ -44,7 +43,7 @@
 
 						<tr align="center">
 							<td>&nbsp;</td>
-							<td><button> Cập nhật thông tin</button></td>
+							<td colspan="2"><button> Cập nhật thông tin</button></td>
 						</tr>
 					</table>
 				</form>

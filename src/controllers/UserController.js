@@ -1,6 +1,3 @@
-const config = require('../config.json');
-const jwt = require('jsonwebtoken');
-
 const mysql = require('mysql');
 
 const configDB = {
@@ -32,31 +29,20 @@ class UserController {
         }
     }
 
-    // [POST] /user/login
-    async postLogin(req, res, next) {
+    // [GET] /user/:id
+    async getUserById(req, res, next) {
+        var id = req.params.id;
         try {
             var conn = mysql.createConnection(configDB);
 
-            const user = await new Promise((resolve, reject) => {
-                conn.query(`SELECT * FROM users WHERE email = '${req.body.email}' AND password = '${req.body.password}'`, (err, results) => {
+            const sqlSelect = `SELECT * FROM users WHERE id = ${id}`;
+            const userById = await new Promise((resolve, reject) => {
+                conn.query(sqlSelect, function (err, results) {
                     if (err) reject(err);
                     resolve(results);
-                })
-            })
-            // console.log(user[0]);
-            if (user && user[0]) {
-                const token = jwt.sign({ id: user[0].id, role: user[0].role }, config.secret, {
-                    expiresIn: '600000'//10 phút
                 });
-                const { password, ...userWithoutPassword } = user[0];
-                var result = {
-                    ...userWithoutPassword,
-                    token
-                }
-                res.status(200).send(result);
-            } else {
-                throw new Error("Cannot find users!");
-            }
+            });
+            res.status(200).send(userById[0]);
         } catch (err) {
             next(err);
         } finally {
