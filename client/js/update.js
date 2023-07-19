@@ -32,15 +32,15 @@ async function getUserById() {
         avatar.src = `avatar/${userById.avatar}`;
 
     } catch (error) {
-        // var errorElement = document.getElementById('error');
-        // errorElement.innerText = 'Xảy ra lỗi: ' + error;
-        // Object.assign(errorElement.style, {
-        //     display: 'block',
-        //     color: 'red',
-        //     fontStyle: 'italic',
-        //     fontWeight: 'bold',
-        //     backgroundColor: 'yellow'
-        // })
+        var errorElement = document.getElementById('error');
+        errorElement.innerText = 'Xảy ra lỗi: ' + error;
+        Object.assign(errorElement.style, {
+            display: 'block',
+            color: 'red',
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            backgroundColor: 'yellow'
+        })
     }
 }
 
@@ -60,7 +60,7 @@ form.addEventListener('submit', async function (e) {
     }
     try {
         var results = await axios({
-            method: "POST",
+            method: "PUT",
             url: "http://localhost:3000/user/update",
             data: formData,
             headers: { "Content-Type": "multipart/form-data" },

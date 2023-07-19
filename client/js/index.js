@@ -10,6 +10,7 @@ async function index() {
         });
         listUsers = listUsers.data;
 
+        bodyElement.innerHTML = '';
         for (const user of listUsers) {
             var trElement = document.createElement('tr');
             trElement.innerHTML =
@@ -47,6 +48,13 @@ function onUpdate(id) {
     location = `capnhat.html?id=${id}`;
 }
 
-function onDelete(id) {
-    console.log(id);
+async function onDelete(id) {
+    if (confirm('Bạn có chắc muốn xóa không?')) {
+        await axios({
+            method: "DELETE",
+            url: `http://localhost:3000/user/delete/${id}`,
+            headers: { "Content-Type": "application/json" },
+        });
+        index();
+    }
 }

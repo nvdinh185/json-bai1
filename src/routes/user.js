@@ -7,6 +7,7 @@ const middleware = require('../middleware/Middleware');
 router.get('/', userController.getListUsers);
 router.get('/:id', userController.getUserById);
 
-router.post('/update', middleware.uploadFile, userController.postUpdate);
+router.put('/update', middleware.uploadFile, userController.postUpdate);
+router.delete('/delete/:id', userController.postDelete);
 
 module.exports = router;
