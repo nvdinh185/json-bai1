@@ -29,7 +29,7 @@ async function getUserById() {
         fullname.value = userById.fullname;
 
         var avatar = form.querySelector('#avatar');
-        avatar.src = userById.avatar;
+        avatar.src = `avatar/${userById.avatar}`;
 
     } catch (error) {
         // var errorElement = document.getElementById('error');

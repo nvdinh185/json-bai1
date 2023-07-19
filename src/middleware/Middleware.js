@@ -38,7 +38,7 @@ class Middleware {
                         });
                     })
 
-                    formData[key] = filenameStored.slice(7);
+                    formData[key] = filenameStored.slice(14);
                 } else {
                     formData[key] = '';
                 }

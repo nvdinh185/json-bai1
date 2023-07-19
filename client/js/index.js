@@ -16,7 +16,7 @@ async function index() {
                 `<tr>
                     <td>${user.id}</td>
                     <td>${user.email}</td>
-                    <td><img src="${user.avatar}" alt="" width="100px" height="100px" /></td>
+                    <td><img src="avatar/${user.avatar}" alt="" width="100px" height="100px" /></td>
                     <td>${user.fullname}</td>
                     <td>
                         <button onclick="onUpdate('${user.id}')">Sửa</button>
