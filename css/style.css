@@ -351,7 +351,7 @@ h5.w3ls-title {
     color: #d6921e;
 }
 
-.login p {
+.login label {
     font-size: 1em;
     color: #fff;
 }
@@ -597,7 +597,7 @@ button.mfp-arrow {
     }
 
     .login-main {
-        width: 35%;
+        width: 40%;
     }
 }
 
@@ -628,7 +628,7 @@ button.mfp-arrow {
     }
 }
 
-@media(max-width:1130px) {
+@media(max-width:991px) {
     .login-main {
         width: 51%;
     }
@@ -658,7 +658,7 @@ button.mfp-arrow {
     }
 
     .login-main {
-        width: 80%;
+        width: 58%;
     }
 
     .login-modal.login {
@@ -912,6 +912,5 @@ th {
     font-weight: bold;
     font-family: cursive;
 }
-
 
 /*-- //responsive-design --*/
