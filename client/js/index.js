@@ -15,9 +15,9 @@ async function index() {
             var trElement = document.createElement('tr');
             trElement.innerHTML =
                 `<tr>
-                    <td>${user.id}</td>
                     <td>${user.email}</td>
-                    <td><img src="avatar/${user.avatar}" alt="" width="100px" height="100px" /></td>
+                    <td><img src="avatar/${user.avatar ? user.avatar : 'No-Image.png'}"
+                    alt="" width="100px" height="100px" /></td>
                     <td>${user.fullname}</td>
                     <td>
                         <button onclick="onUpdate('${user.id}')">Sửa</button>

@@ -35,7 +35,7 @@ class UserController {
         try {
             var conn = mysql.createConnection(configDB);
 
-            const sqlSelect = `SELECT * FROM users WHERE id = ${id}`;
+            const sqlSelect = `SELECT * FROM users WHERE id = '${id}'`;
             const userById = await new Promise((resolve, reject) => {
                 conn.query(sqlSelect, function (err, results) {
                     if (err) reject(err);
@@ -43,6 +43,33 @@ class UserController {
                 });
             });
             res.status(200).send(userById[0]);
+        } catch (err) {
+            next(err);
+        } finally {
+            conn.end();
+        }
+    }
+
+    // [POST] /user/register
+    async postRegister(req, res, next) {
+        function generateUuid() {
+            return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        var { email, password, fullname, file } = req.form_data;
+        try {
+            var conn = mysql.createConnection(configDB);
+
+            const result = await new Promise((resolve, reject) => {
+                conn.query(`INSERT INTO users (id, email, password, fullname, avatar) VALUES
+                ('${generateUuid()}', '${email}', '${password}', '${fullname}', '${file}')`, (err, results) => {
+                    if (err) reject(err);
+                    resolve(results);
+                });
+            })
+            res.status(200).send(result);
         } catch (err) {
             next(err);
         } finally {
