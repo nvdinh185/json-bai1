@@ -1,26 +1,50 @@
 var currentUser = localStorage.getItem('currentUser');
 currentUser = JSON.parse(currentUser);
 if (currentUser && currentUser.role === 1) {
-    var fullnameElement = document.getElementById('fullname');
-    fullnameElement.innerText = 'Cập nhật thông tin cho : ' + currentUser.fullname;
+    function getParameterByName(name, url = location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    var id = getParameterByName('id');
+    async function getUserById(userId) {
+        var userById = await axios({
+            method: "GET",
+            url: `http://localhost:3000/user/${userId}`,
+            headers: { Authorization: `Bearer ${currentUser.token}` },
+        });
+        userById = userById.data;
+
+        var fullnameElement = document.getElementById('fullname');
+        fullnameElement.innerText = 'Cập nhật thông tin cho : ' + userById.fullname;
+
+        var id = form.querySelector('input[name="id"]');
+        id.value = userById.id;
+
+        var email = form.querySelector('input[name="email"]');
+        email.value = userById.email;
+
+        var fullname = form.querySelector('input[name="fullname"]');
+        fullname.value = userById.fullname;
+
+        var avatar = form.querySelector('#avatar');
+        avatar.src = `avatar/${userById.avatar}`;
+    }
+    getUserById(id);
 
     var form = document.forms['update-form'];
-
-    var email = form.querySelector('input[name="email"]');
-    email.value = currentUser.email;
-
-    var fullname = form.querySelector('input[name="fullname"]');
-    fullname.value = currentUser.fullname;
-
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append("id", currentUser.id);
         for (const el of e.target) {
             if (el.files) {
                 formData.append("file", el.files[0]);
-            } else if (el.value) {
+            } else if (el.name) {
                 formData.append(el.name, el.value);
             }
         }

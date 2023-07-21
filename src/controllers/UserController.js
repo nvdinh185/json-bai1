@@ -32,6 +32,27 @@ class UserController {
         }
     }
 
+    // [GET] /user/:id
+    async getUserById(req, res, next) {
+        var id = req.params.id;
+        try {
+            var conn = mysql.createConnection(configDB);
+
+            const sqlSelect = `SELECT * FROM users WHERE id = '${id}'`;
+            const userById = await new Promise((resolve, reject) => {
+                conn.query(sqlSelect, function (err, results) {
+                    if (err) reject(err);
+                    resolve(results);
+                });
+            });
+            res.status(200).send(userById[0]);
+        } catch (err) {
+            next(err);
+        } finally {
+            conn.end();
+        }
+    }
+
     // [POST] /user/login
     async postLogin(req, res, next) {
         try {
@@ -46,7 +67,7 @@ class UserController {
             // console.log(user[0]);
             if (user && user[0]) {
                 const token = jwt.sign({ id: user[0].id, role: user[0].role }, config.secret, {
-                    expiresIn: '600000'//10 phút
+                    expiresIn: '3600000'//60 phút
                 });
                 const { password, ...userWithoutPassword } = user[0];
                 var result = {
@@ -64,15 +85,37 @@ class UserController {
         }
     }
 
-    // [POST] /user/update
+    // [PUT] /user/update
     async postUpdate(req, res, next) {
-        var formData = req.form_data;
+        var { id, email, fullname, file } = req.form_data;
+        // Nếu có chọn ảnh thì update ảnh, nếu không thì lấy lại ảnh cũ
+        var avatarSql = file ? `avatar = "${file}"` : `avatar = avatar`;
         try {
             var conn = mysql.createConnection(configDB);
 
             const result = await new Promise((resolve, reject) => {
-                conn.query(`UPDATE users SET email = '${formData.email}', fullname = '${formData.fullname}',
-                avatar = "${formData.file ? formData.file : 'avatar'}" WHERE id = '${formData.id}'`, (err, results) => {
+                conn.query(`UPDATE users SET email = '${email}', fullname = '${fullname}',
+                ${avatarSql} WHERE id = '${id}'`, (err, results) => {
+                    if (err) reject(err);
+                    resolve(results);
+                });
+            })
+            res.status(200).send(result);
+        } catch (err) {
+            next(err);
+        } finally {
+            conn.end();
+        }
+    }
+
+    // [DELETE] /user/delete/:id
+    async postDelete(req, res, next) {
+        var id = req.params.id;
+        try {
+            var conn = mysql.createConnection(configDB);
+
+            const result = await new Promise((resolve, reject) => {
+                conn.query(`DELETE FROM users WHERE id = '${id}'`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
                 });
