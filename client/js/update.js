@@ -50,7 +50,7 @@ if (currentUser && currentUser.role === 1) {
         }
         try {
             var results = await axios({
-                method: "POST",
+                method: "PUT",
                 url: "http://localhost:3000/user/update",
                 data: formData,
                 headers: {

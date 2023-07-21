@@ -62,7 +62,7 @@ if (currentUser) {
     var err = getParameterByName('err');
     if (err == 1) {
         var errorElement = document.getElementById('error');
-        errorElement.innerText = 'Không có quyền!';
+        errorElement.innerText = 'Không có quyền sửa!';
         Object.assign(errorElement.style, {
             display: 'block',
             color: 'red',
@@ -88,15 +88,27 @@ function onUpdate(id) {
 }
 
 async function onDelete(id) {
-    if (confirm('Bạn có chắc muốn xóa không?')) {
-        await axios({
-            method: "DELETE",
-            url: `http://localhost:3000/user/delete/${id}`,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${currentUser.token}`
-            },
-        });
-        getData();
+    if (currentUser && currentUser.role === 1) {
+        if (confirm('Bạn có chắc muốn xóa không?')) {
+            await axios({
+                method: "DELETE",
+                url: `http://localhost:3000/user/delete/${id}`,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${currentUser.token}`
+                },
+            });
+            getData();
+        }
+    } else {
+        var errorElement = document.getElementById('error');
+        errorElement.innerText = 'Không có quyền xóa!';
+        Object.assign(errorElement.style, {
+            display: 'block',
+            color: 'red',
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            backgroundColor: 'yellow'
+        })
     }
 }
