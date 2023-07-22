@@ -79,8 +79,8 @@ if (currentUser) {
     }
 
 } else {
-    // Nếu chưa login thì chuyển hướng sang trang login.html
-    location = 'login.html';
+    // Nếu chưa đăng nhập thì chuyển hướng sang trang dangnhap.html
+    location = 'dangnhap.html';
 }
 
 function onUpdate(id) {
