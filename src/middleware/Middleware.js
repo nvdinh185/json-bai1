@@ -8,7 +8,7 @@ class Middleware {
         if (!fs.existsSync(dirUpload)) fs.mkdirSync(dirUpload);
         const form = new formidable.IncomingForm();
         form.uploadDir = dirUpload;
-        form.parse(req, async (err, fields, files) => {
+        form.parse(req, (err, fields, files) => {
             var formData = {};
             if (err) {
                 res.writeHead(403, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -25,20 +25,12 @@ class Middleware {
                     //đường dẫn thực file upload lên
                     var filenameStored = `${dirUpload}/${fileName}_${Date.now()}.${ext}`;
 
-                    var oldpath = files[key].filepath;
-                    var newpath = filenameStored
+                    var oldPath = files[key].filepath;
+                    var newPath = filenameStored;
                     //chuyển file từ thư mục temp sang thư mục upload_files
-                    await new Promise((resolve, reject) => {
-                        fs.rename(oldpath, newpath, err => {
-                            if (err) {
-                                reject("Error..." + err);
-                            } else {
-                                resolve('OK');
-                            }
-                        });
-                    })
+                    fs.renameSync(oldPath, newPath);
 
-                    formData[key] = filenameStored.slice(14);
+                    formData[key] = newPath.slice(14);
                 } else {
                     formData[key] = '';
                 }

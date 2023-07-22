@@ -913,4 +913,8 @@ th {
     font-family: cursive;
 }
 
+.input-file {
+    background-color: #ecba65;
+}
+
 /*-- //responsive-design --*/
