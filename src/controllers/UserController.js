@@ -67,7 +67,7 @@ class UserController {
             // console.log(user[0]);
             if (user && user[0]) {
                 const token = jwt.sign({ id: user[0].id, role: user[0].role }, config.secret, {
-                    expiresIn: '3600000'//60 phút
+                    expiresIn: '600000'//10 phút
                 });
                 const { password, ...userWithoutPassword } = user[0];
                 var result = {
