@@ -17,7 +17,7 @@ async function index() {
                 `<tr>
                     <td>${user.email}</td>
                     <td><img src="avatar/${user.avatar ? user.avatar : 'No-Image.png'}"
-                    alt="" width="100px" height="100px" /></td>
+                    alt="Không có hình ảnh" width="100px" height="100px" /></td>
                     <td>${user.fullname}</td>
                     <td>
                         <button onclick="onUpdate('${user.id}')">Sửa</button>
