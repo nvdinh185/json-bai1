@@ -12,9 +12,8 @@ async function index() {
 
         bodyElement.innerHTML = '';
         for (const user of listUsers) {
-            var trElement = document.createElement('tr');
-            trElement.innerHTML =
-                `<tr>
+            bodyElement.innerHTML +=
+                `<tr align='center'>
                     <td>${user.email}</td>
                     <td><img src="avatar/${user.avatar ? user.avatar : 'No-Image.png'}"
                     alt="Không có hình ảnh" width="100px" height="100px" /></td>
@@ -24,10 +23,6 @@ async function index() {
                         <button onclick="onDelete('${user.id}')">Xóa</button>
                     </td>
                 </tr>`;
-            trElement.setAttribute('align', 'center');
-
-            bodyElement.appendChild(trElement);
-
         }
     } catch (error) {
         var errorElement = document.getElementById('error');
