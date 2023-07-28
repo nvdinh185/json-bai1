@@ -10,24 +10,20 @@ const getData = async () => {
             headers: { Authorization: `Bearer ${currentUser.token}` },
         });
         listUsers = listUsers.data;
+
         bodyElement.innerHTML = '';
         for (const user of listUsers) {
-            var trElement = document.createElement('tr');
-            trElement.innerHTML =
-                `<tr>
+            bodyElement.innerHTML +=
+                `<tr align='center'>
                         <td>${user.id}</td>
                         <td>${user.email}</td>
-                        <td><img src="avatar/${user.avatar}" alt="" width="100px" height="100px" /></td>
+                        <td><img src="avatar/${user.avatar}" alt="Không có hình ảnh" width="100px" height="100px" /></td>
                         <td>${user.fullname}</td>
                         <td>
                             <button onclick="onUpdate('${user.id}')">Sửa</button>
                             <button onclick="onDelete('${user.id}')">Xóa</button>
                         </td>
                     </tr>`;
-            trElement.setAttribute('align', 'center');
-
-            bodyElement.appendChild(trElement);
-
         }
     } catch (error) {
         var errorElement = document.getElementById('error');
@@ -50,7 +46,7 @@ if (currentUser) {
     var greetingElement = document.getElementById('greeting');
     greetingElement.innerText = 'Xin chào : ' + currentUser.fullname;
 
-    function getParameterByName(name, url = window.location.href) {
+    function getParameterByName(name, url = location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
             results = regex.exec(url);
