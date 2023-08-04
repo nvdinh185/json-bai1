@@ -1,6 +1,4 @@
-var currentUser = localStorage.getItem('currentUser');
-currentUser = JSON.parse(currentUser);
-if (currentUser) {
+if (localStorage.getItem('currentUser')) {
     // Nếu đã đăng nhập thì chuyển hướng sang trang index.html
     location = 'index.html';
 } else {

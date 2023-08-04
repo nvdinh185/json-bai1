@@ -53,13 +53,13 @@ if (currentUser) {
     }
 
 } else {
-    // Nếu chưa đăng nhập thì chuyển hướng sang trang dangnhap.html
-    location = 'dangnhap.html';
+    // Nếu chưa đăng nhập thì chuyển hướng sang trang login.html
+    location = 'login.html';
 }
 
 function onUpdate(id) {
     if (currentUser && currentUser.role === 1) {
-        location = `capnhat.html?id=${id}`;
+        location = `update.html?id=${id}`;
     } else {
         var errorElement = document.getElementById('error');
         errorElement.innerText = 'Không có quyền sửa!';

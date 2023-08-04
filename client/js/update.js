@@ -77,6 +77,6 @@ if (currentUser) {
         }
     })
 } else {
-    // Nếu chưa đăng nhập thì chuyển hướng sang trang dangnhap.html
-    location = 'dangnhap.html';
+    // Nếu chưa đăng nhập thì chuyển hướng sang trang login.html
+    location = 'login.html';
 }
