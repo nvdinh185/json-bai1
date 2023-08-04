@@ -15,15 +15,15 @@ const getData = async () => {
         for (const user of listUsers) {
             bodyElement.innerHTML +=
                 `<tr align='center'>
-                        <td>${user.id}</td>
-                        <td>${user.email}</td>
-                        <td><img src="avatar/${user.avatar}" alt="Không có hình ảnh" width="100px" height="100px" /></td>
-                        <td>${user.fullname}</td>
-                        <td>
-                            <button onclick="onUpdate('${user.id}')">Sửa</button>
-                            <button onclick="onDelete('${user.id}')">Xóa</button>
-                        </td>
-                    </tr>`;
+                    <td>${user.id}</td>
+                    <td>${user.email}</td>
+                    <td><img src="avatar/${user.avatar}" alt="Không có hình ảnh" width="100px" height="100px" /></td>
+                    <td>${user.fullname}</td>
+                    <td>
+                        <button onclick="onUpdate('${user.id}')">Sửa</button>
+                        <button onclick="onDelete('${user.id}')">Xóa</button>
+                    </td>
+                </tr>`;
         }
     } catch (error) {
         var errorElement = document.getElementById('error');
@@ -46,28 +46,6 @@ if (currentUser) {
     var greetingElement = document.getElementById('greeting');
     greetingElement.innerText = 'Xin chào : ' + currentUser.fullname;
 
-    function getParameterByName(name, url = location.href) {
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
-
-    var err = getParameterByName('err');
-    if (err == 1) {
-        var errorElement = document.getElementById('error');
-        errorElement.innerText = 'Không có quyền sửa!';
-        Object.assign(errorElement.style, {
-            display: 'block',
-            color: 'red',
-            fontStyle: 'italic',
-            fontWeight: 'bold',
-            backgroundColor: 'yellow'
-        })
-    }
-
     var logoutElement = document.getElementById('logout');
     logoutElement.onclick = function () {
         localStorage.removeItem('currentUser');
@@ -80,7 +58,19 @@ if (currentUser) {
 }
 
 function onUpdate(id) {
-    location = `capnhat.html?id=${id}`;
+    if (currentUser && currentUser.role === 1) {
+        location = `capnhat.html?id=${id}`;
+    } else {
+        var errorElement = document.getElementById('error');
+        errorElement.innerText = 'Không có quyền sửa!';
+        Object.assign(errorElement.style, {
+            display: 'block',
+            color: 'red',
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            backgroundColor: 'yellow'
+        })
+    }
 }
 
 async function onDelete(id) {

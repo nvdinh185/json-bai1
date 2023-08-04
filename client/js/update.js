@@ -1,6 +1,6 @@
 var currentUser = localStorage.getItem('currentUser');
 currentUser = JSON.parse(currentUser);
-if (currentUser && currentUser.role === 1) {
+if (currentUser) {
     function getParameterByName(name, url = location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -11,6 +11,7 @@ if (currentUser && currentUser.role === 1) {
     }
 
     var id = getParameterByName('id');
+    // lấy thông tin user muốn sửa để điền vào form sửa
     async function getUserById(userId) {
         var userById = await axios({
             method: "GET",
@@ -37,6 +38,7 @@ if (currentUser && currentUser.role === 1) {
     getUserById(id);
 
     var form = document.forms['update-form'];
+    // Xử lý sửa user
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
@@ -75,5 +77,6 @@ if (currentUser && currentUser.role === 1) {
         }
     })
 } else {
-    location = 'index.html?err=1';
+    // Nếu chưa đăng nhập thì chuyển hướng sang trang dangnhap.html
+    location = 'dangnhap.html';
 }
