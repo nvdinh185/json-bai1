@@ -48,7 +48,7 @@ class Middleware {
             (err, decoded) => {
                 if (err) {
                     console.log('Lỗi xác thực:', err.message);
-                    return res.status(401).json({ message: err.message });
+                    res.status(401).json({ message: err.message });
                 } else {
                     // console.log('decoded: ', decoded);
                     next();

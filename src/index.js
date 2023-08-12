@@ -5,8 +5,7 @@ const errorHandler = require('./_helpers/error-handler');
 
 app.use(express.json());
 
-const publicPath = path.join(__dirname, "../client");
-app.use(express.static(publicPath));
+app.use(express.static(path.join(__dirname, "../client")));
 
 const route = require('./routes');
 
@@ -15,10 +14,6 @@ route(app);
 
 // global error handler
 app.use(errorHandler);
-
-app.get('/', function (req, res) {
-    res.sendFile(path.join(publicPath, 'index.html'));
-});
 
 // start server
 const port = 3000;
