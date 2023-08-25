@@ -31,9 +31,6 @@ async function getUserById() {
         var fullname = form.querySelector('input[name="fullname"]');
         fullname.value = userById.fullname;
 
-        var avatar = form.querySelector('#avatar');
-        avatar.src = `avatar/${userById.avatar}`;
-
     } catch (error) {
         var errorElement = document.getElementById('error');
         errorElement.innerText = 'Xảy ra lỗi: ' + error;
@@ -59,7 +56,6 @@ form.addEventListener('submit', async function (e) {
             formValue[el.name] = el.value;
         }
     }
-    formValue.avatar = 'edit.jpg';
 
     try {
         var results = await axios({

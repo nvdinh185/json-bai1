@@ -14,9 +14,8 @@ async function index() {
         for (const user of listUsers) {
             bodyElement.innerHTML +=
                 `<tr align='center'>
+                    <td>${user.id}</td>
                     <td>${user.email}</td>
-                    <td><img src="avatar/${user.avatar ? user.avatar : 'No-Image.png'}"
-                    alt="Không có hình ảnh" width="100px" height="100px" /></td>
                     <td>${user.fullname}</td>
                     <td>
                         <button onclick="onUpdate('${user.id}')">Sửa</button>
