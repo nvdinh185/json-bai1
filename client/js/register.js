@@ -3,20 +3,19 @@ var form = document.forms['register-form'];
 form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const formData = new FormData();
+    const formValue = {};
     for (const el of e.target) {
-        if (el.files) {
-            formData.append("file", el.files[0]);
-        } else if (el.name) {
-            formData.append(el.name, el.value);
+        if (el.name) {
+            formValue[el.name] = el.value;
         }
     }
+    formValue.avatar = 'default.jpg';
+
     try {
         var results = await axios({
             method: "POST",
-            url: "http://localhost:3000/user/register",
-            data: formData,
-            headers: { "Content-Type": "multipart/form-data" },
+            url: "http://localhost:3000/users",
+            data: formValue
         });
 
         //handle success

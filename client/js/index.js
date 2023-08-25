@@ -6,7 +6,7 @@ async function index() {
     try {
         var listUsers = await axios({
             method: "GET",
-            url: "http://localhost:3000/user",
+            url: "http://localhost:3000/users",
         });
         listUsers = listUsers.data;
 
@@ -47,8 +47,7 @@ async function onDelete(id) {
     if (confirm('Bạn có chắc muốn xóa không?')) {
         await axios({
             method: "DELETE",
-            url: `http://localhost:3000/user/delete/${id}`,
-            headers: { "Content-Type": "application/json" },
+            url: `http://localhost:3000/users/${id}`
         });
         index();
     }

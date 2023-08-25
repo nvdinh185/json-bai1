@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "nvdinh123@gmail.com",
+      "password": "123456",
+      "fullname": "Nguyễn Văn Định",
+      "avatar": "hinh1.jpg"
+    },
+    {
+      "id": "2",
+      "email": "teo@gmail.com",
+      "password": "123456",
+      "fullname": "Nguyễn Văn Tèo",
+      "avatar": "hinh2.jpg"
+    },
+    {
+      "id": "3",
+      "email": "be@gmail.com",
+      "password": "123456",
+      "fullname": "Lê Thị Bê",
+      "avatar": "hinh3.gif"
+    }
+  ]
+}
