@@ -4,29 +4,19 @@
       "id": "1",
       "email": "nvdinh123@gmail.com",
       "password": "123456",
-      "fullname": "Nguyễn Văn Định",
-      "avatar": "hinh1.jpg"
+      "fullname": "Nguyễn Văn Định"
     },
     {
       "id": "2",
       "email": "teo123@gmail.com",
       "password": "123456",
-      "fullname": "Nguyễn Văn Tèo",
-      "avatar": "edit.jpg"
+      "fullname": "Nguyễn Văn Tèo"
     },
     {
       "id": "3",
       "email": "be@gmail.com",
       "password": "123456",
-      "fullname": "Lê Thị Bê",
-      "avatar": "hinh3.gif"
-    },
-    {
-      "id": "58p_fLs",
-      "password": "555",
-      "email": "nvdinh0123@gmail.com",
-      "fullname": "Nguyễn Định",
-      "avatar": "edit.jpg"
+      "fullname": "Lê Thị Bê"
     }
   ]
 }

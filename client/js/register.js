@@ -9,7 +9,6 @@ form.addEventListener('submit', async function (e) {
             formValue[el.name] = el.value;
         }
     }
-    formValue.avatar = 'default.jpg';
 
     try {
         var results = await axios({
