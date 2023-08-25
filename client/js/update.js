@@ -15,7 +15,7 @@ async function getUserById() {
     try {
         var userById = await axios({
             method: "GET",
-            url: `http://localhost:3000/user/${edId}`,
+            url: `http://localhost:3000/users/${edId}`,
         });
         userById = userById.data;
 
@@ -24,6 +24,9 @@ async function getUserById() {
 
         var email = form.querySelector('input[name="email"]');
         email.value = userById.email;
+
+        var password = form.querySelector('input[name="password"]');
+        password.value = userById.password;
 
         var fullname = form.querySelector('input[name="fullname"]');
         fullname.value = userById.fullname;
@@ -50,20 +53,19 @@ getUserById();
 form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const formData = new FormData();
+    const formValue = {};
     for (const el of e.target) {
-        if (el.files) {
-            formData.append("file", el.files[0]);
-        } else if (el.name) {
-            formData.append(el.name, el.value);
+        if (el.name) {
+            formValue[el.name] = el.value;
         }
     }
+    formValue.avatar = 'edit.jpg';
+
     try {
         var results = await axios({
             method: "PUT",
-            url: "http://localhost:3000/user/update",
-            data: formData,
-            headers: { "Content-Type": "multipart/form-data" },
+            url: `http://localhost:3000/users/${formValue.id}`,
+            data: formValue
         });
 
         //handle success

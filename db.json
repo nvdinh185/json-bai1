@@ -9,10 +9,10 @@
     },
     {
       "id": "2",
-      "email": "teo@gmail.com",
+      "email": "teo123@gmail.com",
       "password": "123456",
       "fullname": "Nguyễn Văn Tèo",
-      "avatar": "hinh2.jpg"
+      "avatar": "edit.jpg"
     },
     {
       "id": "3",
@@ -20,6 +20,13 @@
       "password": "123456",
       "fullname": "Lê Thị Bê",
       "avatar": "hinh3.gif"
+    },
+    {
+      "id": "58p_fLs",
+      "password": "555",
+      "email": "nvdinh0123@gmail.com",
+      "fullname": "Nguyễn Định",
+      "avatar": "edit.jpg"
     }
   ]
 }
