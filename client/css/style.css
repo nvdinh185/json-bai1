@@ -298,8 +298,8 @@ h5.w3ls-title {
 .login input[type="password"] {
     display: block;
     background: none;
-    border: none;
-    border-bottom: 1px solid #ffffff;
+    /* border: none;
+    border-bottom: 1px solid #ffffff; */
     width: 100%;
     outline: none;
     font-size: 0.95em;
@@ -915,6 +915,11 @@ th {
 
 .input-file {
     background-color: #ecba65;
+}
+
+.invalid {
+    border: 2px solid red;
+    border-radius: 5px;
 }
 
 /*-- //responsive-design --*/
