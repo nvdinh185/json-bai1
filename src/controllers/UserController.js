@@ -14,7 +14,7 @@ class UserController {
         try {
             var conn = mysql.createConnection(configDB);
 
-            const sqlSelect = "SELECT * FROM users";
+            const sqlSelect = "SELECT * FROM users2";
             const listUsers = await new Promise((resolve, reject) => {
                 conn.query(sqlSelect, function (err, results) {
                     if (err) reject(err);
@@ -35,7 +35,7 @@ class UserController {
         try {
             var conn = mysql.createConnection(configDB);
 
-            const sqlSelect = `SELECT * FROM users WHERE id = '${id}'`;
+            const sqlSelect = `SELECT * FROM users2 WHERE id = '${id}'`;
             const userById = await new Promise((resolve, reject) => {
                 conn.query(sqlSelect, function (err, results) {
                     if (err) reject(err);
@@ -63,7 +63,7 @@ class UserController {
             var conn = mysql.createConnection(configDB);
 
             const result = await new Promise((resolve, reject) => {
-                conn.query(`INSERT INTO users (id, email, password, fullname, avatar) VALUES
+                conn.query(`INSERT INTO users2 (id, email, password, fullname, avatar) VALUES
                 ('${generateUuid()}', '${email}', '${password}', '${fullname}', '${file}')`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
@@ -86,7 +86,7 @@ class UserController {
             var conn = mysql.createConnection(configDB);
 
             const result = await new Promise((resolve, reject) => {
-                conn.query(`UPDATE users SET email = '${email}', fullname = '${fullname}',
+                conn.query(`UPDATE users2 SET email = '${email}', fullname = '${fullname}',
                 ${avatarSql} WHERE id = '${id}'`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
@@ -108,7 +108,7 @@ class UserController {
             var conn = mysql.createConnection(configDB);
 
             const result = await new Promise((resolve, reject) => {
-                conn.query(`DELETE FROM users WHERE id = '${id}'`, (err, results) => {
+                conn.query(`DELETE FROM users2 WHERE id = '${id}'`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
                 });
