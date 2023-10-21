@@ -11,8 +11,7 @@ class Middleware {
         form.parse(req, (err, fields, files) => {
             var formData = {};
             if (err) {
-                res.writeHead(403, { 'Content-Type': 'text/html; charset=utf-8' });
-                res.end(JSON.stringify({ message: 'Parse Formdata Error', error: err }));
+                next(err);
             } else {
                 for (var key in fields) {
                     formData[key] = fields[key];
