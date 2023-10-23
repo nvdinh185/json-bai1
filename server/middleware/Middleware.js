@@ -22,10 +22,9 @@ class Middleware {
                     var fileName = files[key].originalFilename.split('.')[0];
                     var ext = files[key].originalFilename.split('.')[1];
                     //đường dẫn thực file upload lên
-                    var filenameStored = `${dirUpload}/${fileName}_${Date.now()}.${ext}`;
+                    var newPath = `${dirUpload}/${fileName}_${Date.now()}.${ext}`;
 
                     var oldPath = files[key].filepath;
-                    var newPath = filenameStored;
                     //chuyển file từ thư mục temp sang thư mục upload_files
                     fs.renameSync(oldPath, newPath);
 
