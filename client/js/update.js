@@ -1,6 +1,6 @@
-const bookApi = 'http://localhost:3000/users';
+const bookApi = 'http://localhost:3000/user';
 
-var form = document.forms['update-form'];
+var form = $('#update-form');
 
 function getParameterByName(name, url = location.href) {
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -18,29 +18,29 @@ async function getUserById() {
         var userById = await axios.get(bookApi + '/' + edId);
         userById = userById.data;
 
-        var id = form.querySelector('input[name="id"]');
-        id.value = userById.id;
+        var id = $('input[name="id"]');
+        id.val(userById.id);
 
-        var email = form.querySelector('input[name="email"]');
-        email.value = userById.email;
+        var email = $('input[name="email"]');
+        email.val(userById.email);
 
-        var password = form.querySelector('input[name="password"]');
-        password.value = userById.password;
+        var password = $('input[name="password"]');
+        password.val(userById.password);
 
-        var fullname = form.querySelector('input[name="fullname"]');
-        fullname.value = userById.fullname;
+        var fullname = $('input[name="fullname"]');
+        fullname.val(userById.fullname);
 
     } catch (error) {
-        var errorElement = document.getElementById('error');
-        errorElement.innerText = 'Xảy ra lỗi: ' + error;
-        errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
+        var errorElement = $('#error');
+        $(errorElement).text('Xảy ra lỗi khi lấy dữ liệu để sửa!');
+        $(errorElement).attr('style', 'display: block; color: red; font-style: italic;');
     }
 }
 
 getUserById();
 
 
-form.addEventListener('submit', async function (e) {
+form.on('submit', async function (e) {
     e.preventDefault();
 
     const formValue = {};
@@ -53,7 +53,7 @@ form.addEventListener('submit', async function (e) {
     try {
         var results = await axios({
             method: "PUT",
-            url: `${bookApi}/${formValue.id}`,
+            url: bookApi,
             data: formValue
         });
 
@@ -61,8 +61,8 @@ form.addEventListener('submit', async function (e) {
         // console.log('results: ', results);
         location = 'index.html';
     } catch (error) {
-        var errorElement = document.getElementById('error');
-        errorElement.innerText = 'Xảy ra lỗi: ' + error;
-        errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
+        var errorElement = $('#error');
+        $(errorElement).text('Xảy ra lỗi khi sửa!');
+        $(errorElement).attr('style', 'display: block; color: red; font-style: italic;');
     }
 })

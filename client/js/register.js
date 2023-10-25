@@ -1,38 +1,40 @@
-var form = document.forms['register-form'];
+var form = $('#register-form');
 
 // Hàm này để validate khi blur hoặc nhập vào ô input
 function handleBlurInput(input) {
-    var errorElement = input.parentElement.querySelector('.form-message');
-    input.onblur = function () {
-        if (input.value.trim() === '') {
-            errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
-            errorElement.innerText = 'Yêu cầu nhập!';
-            input.classList.add('invalid');
+    var errorElement = input.parent().children()[2];
+    input.blur(function () {
+        if (input.val().trim() === '') {
+            $(errorElement).attr('style', 'display: block; color: red; font-style: italic;');
+            $(errorElement).text('Yêu cầu nhập!');
+            input.addClass('invalid');
         }
-    }
+    })
 
-    input.oninput = function () {
-        errorElement.setAttribute('style', 'display: none;');
-        input.classList.remove('invalid');
-    }
+    input.on('input', function () {
+        $(errorElement).attr('style', 'display: none;');
+        input.removeClass('invalid');
+    })
 }
 
-handleBlurInput(document.querySelector('input[name="email"]'));
-handleBlurInput(document.querySelector('input[name="password"]'));
-handleBlurInput(document.querySelector('input[name="fullname"]'));
+handleBlurInput($('input[name="email"]'));
+handleBlurInput($('input[name="password"]'));
+handleBlurInput($('input[name="fullname"]'));
 
-form.addEventListener('submit', async function (e) {
+form.on('submit', async function (e) {
     e.preventDefault();
+
     var check = true;
-    if (isRequired(document.querySelector('input[name="email"]'))) {
+    if (isRequired($('input[name="email"]'))) {
         check = false;
     }
-    if (isRequired(document.querySelector('input[name="password"]'))) {
+    if (isRequired($('input[name="password"]'))) {
         check = false;
     }
-    if (isRequired(document.querySelector('input[name="fullname"]'))) {
+    if (isRequired($('input[name="fullname"]'))) {
         check = false;
     }
+
     if (check) {
 
         const formValue = {};
@@ -41,11 +43,12 @@ form.addEventListener('submit', async function (e) {
                 formValue[el.name] = el.value;
             }
         }
+        formValue.id = generateUuid();
 
         try {
             var results = await axios({
                 method: "POST",
-                url: "http://localhost:3000/users",
+                url: "http://localhost:3000/user",
                 data: formValue
             });
 
@@ -53,19 +56,26 @@ form.addEventListener('submit', async function (e) {
             // console.log('results: ', results);
             location = 'index.html';
         } catch (error) {
-            var errorElement = document.getElementById('error');
-            errorElement.innerText = 'Xảy ra lỗi: ' + error;
-            errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
+            var errorElement = $('#error');
+            $(errorElement).text('Xảy ra lỗi khi thêm');
+            $(errorElement).attr('style', 'display: block; color: red; font-style: italic;');
         }
     }
 
     function isRequired(input) {
-        var errorElement = input.parentElement.querySelector('.form-message');
-        if (input.value.trim() === '') {
-            errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
-            errorElement.innerText = 'Yêu cầu nhập!';
-            input.classList.add('invalid');
+        var errorElement = input.parent().children()[2];
+        if (input.val().trim() === '') {
+            $(errorElement).attr('style', 'display: block; color: red; font-style: italic;');
+            $(errorElement).text('Yêu cầu nhập!');
+            input.addClass('invalid');
             return true;
         }
+    }
+
+    function generateUuid() {
+        return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 })
