@@ -1,3 +1,5 @@
+const bookApi = 'http://localhost:3000/users';
+
 var form = document.forms['update-form'];
 
 function getParameterByName(name, url = location.href) {
@@ -13,10 +15,7 @@ var edId = getParameterByName('id');
 
 async function getUserById() {
     try {
-        var userById = await axios({
-            method: "GET",
-            url: `http://localhost:3000/users/${edId}`,
-        });
+        var userById = await axios.get(bookApi + '/' + edId);
         userById = userById.data;
 
         var id = form.querySelector('input[name="id"]');
@@ -34,13 +33,7 @@ async function getUserById() {
     } catch (error) {
         var errorElement = document.getElementById('error');
         errorElement.innerText = 'Xảy ra lỗi: ' + error;
-        Object.assign(errorElement.style, {
-            display: 'block',
-            color: 'red',
-            fontStyle: 'italic',
-            fontWeight: 'bold',
-            backgroundColor: 'yellow'
-        })
+        errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
     }
 }
 
@@ -60,7 +53,7 @@ form.addEventListener('submit', async function (e) {
     try {
         var results = await axios({
             method: "PUT",
-            url: `http://localhost:3000/users/${formValue.id}`,
+            url: `${bookApi}/${formValue.id}`,
             data: formValue
         });
 
@@ -70,12 +63,6 @@ form.addEventListener('submit', async function (e) {
     } catch (error) {
         var errorElement = document.getElementById('error');
         errorElement.innerText = 'Xảy ra lỗi: ' + error;
-        Object.assign(errorElement.style, {
-            display: 'block',
-            color: 'red',
-            fontStyle: 'italic',
-            fontWeight: 'bold',
-            backgroundColor: 'yellow'
-        })
+        errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
     }
 })

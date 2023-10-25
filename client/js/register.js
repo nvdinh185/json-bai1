@@ -1,6 +1,6 @@
 var form = document.forms['register-form'];
 
-// Hàm này để validate khi blur vào ô input
+// Hàm này để validate khi blur hoặc nhập vào ô input
 function handleBlurInput(input) {
     var errorElement = input.parentElement.querySelector('.form-message');
     input.onblur = function () {
@@ -55,13 +55,7 @@ form.addEventListener('submit', async function (e) {
         } catch (error) {
             var errorElement = document.getElementById('error');
             errorElement.innerText = 'Xảy ra lỗi: ' + error;
-            Object.assign(errorElement.style, {
-                display: 'block',
-                color: 'red',
-                fontStyle: 'italic',
-                fontWeight: 'bold',
-                backgroundColor: 'yellow'
-            })
+            errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
         }
     }
 
@@ -72,8 +66,6 @@ form.addEventListener('submit', async function (e) {
             errorElement.innerText = 'Yêu cầu nhập!';
             input.classList.add('invalid');
             return true;
-        } else {
-            return false;
         }
     }
 })

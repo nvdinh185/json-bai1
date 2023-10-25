@@ -1,13 +1,12 @@
+const bookApi = 'http://localhost:3000/users';
+
 async function index() {
     var tblElement = document.getElementById('tbl');
 
     var bodyElement = tblElement.getElementsByTagName('tbody')[0];
 
     try {
-        var listUsers = await axios({
-            method: "GET",
-            url: "http://localhost:3000/users",
-        });
+        var listUsers = await axios.get(bookApi);
         listUsers = listUsers.data;
 
         bodyElement.innerHTML = '';
@@ -26,13 +25,7 @@ async function index() {
     } catch (error) {
         var errorElement = document.getElementById('error');
         errorElement.innerText = 'Xảy ra lỗi: ' + error;
-        Object.assign(errorElement.style, {
-            display: 'block',
-            color: 'red',
-            fontStyle: 'italic',
-            fontWeight: 'bold',
-            backgroundColor: 'yellow'
-        })
+        errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
     }
 }
 
@@ -46,7 +39,7 @@ async function onDelete(id) {
     if (confirm('Bạn có chắc muốn xóa không?')) {
         await axios({
             method: "DELETE",
-            url: `http://localhost:3000/users/${id}`
+            url: `${bookApi}/${id}`
         });
         index();
     }
