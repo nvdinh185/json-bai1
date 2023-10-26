@@ -84,7 +84,7 @@ class UserController {
             var conn = mysql.createConnection(configDB);
 
             const result = await new Promise((resolve, reject) => {
-                conn.query(`UPDATE users1 SET email = '${email}', password = ${password}, fullname = '${fullname}'
+                conn.query(`UPDATE users1 SET email = '${email}', password = '${password}', fullname = '${fullname}'
                 WHERE id = '${id}'`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
