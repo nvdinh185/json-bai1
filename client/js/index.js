@@ -1,31 +1,29 @@
 const bookApi = 'http://localhost:3000/users';
 
 async function index() {
-    var tblElement = document.getElementById('tbl');
 
-    var bodyElement = tblElement.getElementsByTagName('tbody')[0];
+    var bodyElement = $('#tblBody');
 
     try {
         var listUsers = await axios.get(bookApi);
         listUsers = listUsers.data;
 
-        bodyElement.innerHTML = '';
-        for (const user of listUsers) {
-            bodyElement.innerHTML +=
-                `<tr align='center'>
-                    <td>${user.id}</td>
-                    <td>${user.email}</td>
-                    <td>${user.fullname}</td>
-                    <td>
-                        <button onclick="onUpdate('${user.id}')">Sửa</button>
-                        <button onclick="onDelete('${user.id}')">Xóa</button>
-                    </td>
-                </tr>`;
-        }
+        var htmls = listUsers.map(function (user) {
+            return `<tr align='center'>
+                <td>${user.id}</td>
+                <td>${user.email}</td>
+                <td>${user.fullname}</td>
+                <td>
+                    <button onclick="onUpdate('${user.id}')">Sửa</button>
+                    <button onclick="onDelete('${user.id}')">Xóa</button>
+                </td>
+            </tr>`
+        })
+        bodyElement.html(htmls.join(''));
     } catch (error) {
-        var errorElement = document.getElementById('error');
-        errorElement.innerText = 'Xảy ra lỗi: ' + error;
-        errorElement.setAttribute('style', 'display: block; color: red; font-style: italic;');
+        var errorElement = $('#error');
+        errorElement.text('Xảy ra lỗi khi lấy dữ liệu!');
+        errorElement.attr('style', 'display: block; color: red; font-style: italic;');
     }
 }
 
@@ -39,7 +37,7 @@ async function onDelete(id) {
     if (confirm('Bạn có chắc muốn xóa không?')) {
         await axios({
             method: "DELETE",
-            url: `${bookApi}/${id}`
+            url: bookApi + '/' + id
         });
         index();
     }
