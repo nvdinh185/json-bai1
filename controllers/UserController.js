@@ -62,14 +62,14 @@ class UserController {
         try {
             var conn = mysql.createConnection(configDB);
 
-            const result = await new Promise((resolve, reject) => {
+            await new Promise((resolve, reject) => {
                 conn.query(`INSERT INTO users1 (id, email, password, fullname) VALUES
                 ('${generateUuid()}', '${email}', '${password}', '${fullname}')`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
                 });
             })
-            res.status(200).send(result);
+            res.status(200).send('OK');
         } catch (err) {
             res.status(500).send(err);
         } finally {
@@ -83,14 +83,14 @@ class UserController {
         try {
             var conn = mysql.createConnection(configDB);
 
-            const result = await new Promise((resolve, reject) => {
+            await new Promise((resolve, reject) => {
                 conn.query(`UPDATE users1 SET email = '${email}', password = '${password}', fullname = '${fullname}'
                 WHERE id = '${id}'`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
                 });
             })
-            res.status(200).send(result);
+            res.status(200).send('OK');
         } catch (err) {
             console.log(err);
             res.status(500).send(err);
@@ -106,13 +106,13 @@ class UserController {
         try {
             var conn = mysql.createConnection(configDB);
 
-            const result = await new Promise((resolve, reject) => {
+            await new Promise((resolve, reject) => {
                 conn.query(`DELETE FROM users1 WHERE id = '${id}'`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
                 });
             })
-            res.status(200).send(result);
+            res.status(200).send('OK');
         } catch (err) {
             res.status(500).send(err);
         } finally {
