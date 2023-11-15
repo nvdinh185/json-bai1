@@ -62,14 +62,14 @@ class UserController {
         try {
             var conn = mysql.createConnection(configDB);
 
-            const result = await new Promise((resolve, reject) => {
+            await new Promise((resolve, reject) => {
                 conn.query(`INSERT INTO users2 (id, email, password, fullname, avatar) VALUES
                 ('${generateUuid()}', '${email}', '${password}', '${fullname}', '${file}')`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
                 });
             })
-            res.status(200).send(result);
+            res.status(200).send('OK');
         } catch (err) {
             next(err);
         } finally {
@@ -85,14 +85,14 @@ class UserController {
         try {
             var conn = mysql.createConnection(configDB);
 
-            const result = await new Promise((resolve, reject) => {
+            await new Promise((resolve, reject) => {
                 conn.query(`UPDATE users2 SET email = '${email}', fullname = '${fullname}',
                 ${avatarSql} WHERE id = '${id}'`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
                 });
             })
-            res.status(200).send(result);
+            res.status(200).send('OK');
         } catch (err) {
             next(err);
         } finally {
@@ -107,13 +107,13 @@ class UserController {
         try {
             var conn = mysql.createConnection(configDB);
 
-            const result = await new Promise((resolve, reject) => {
+            await new Promise((resolve, reject) => {
                 conn.query(`DELETE FROM users2 WHERE id = '${id}'`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
                 });
             })
-            res.status(200).send(result);
+            res.status(200).send('OK');
         } catch (err) {
             next(err);
         } finally {
