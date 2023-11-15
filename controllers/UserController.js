@@ -10,7 +10,7 @@ const configDB = {
 class UserController {
 
     // [GET] /user
-    async getListUsers(req, res, next) {
+    async getListUsers(req, res) {
         try {
             var conn = mysql.createConnection(configDB);
 
@@ -30,7 +30,7 @@ class UserController {
     }
 
     // [GET] /user/:id
-    async getUserById(req, res, next) {
+    async getUserById(req, res) {
         var id = req.params.id;
         try {
             var conn = mysql.createConnection(configDB);
@@ -51,7 +51,7 @@ class UserController {
     }
 
     // [POST] /user
-    async postRegister(req, res, next) {
+    async postRegister(req, res) {
         function generateUuid() {
             return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
                 var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -78,7 +78,7 @@ class UserController {
     }
 
     // [PUT] /user
-    async postUpdate(req, res, next) {
+    async postUpdate(req, res) {
         var { id, email, password, fullname } = req.body;
         try {
             var conn = mysql.createConnection(configDB);
@@ -100,7 +100,7 @@ class UserController {
     }
 
     // [DELETE] /user/:id
-    async postDelete(req, res, next) {
+    async postDelete(req, res) {
         var id = req.params.id;
 
         try {
