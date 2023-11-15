@@ -1,39 +1,31 @@
-async function index() {
-    var tblElement = document.getElementById('tbl');
+const bookApi = 'http://localhost:3000/user';
 
-    var bodyElement = tblElement.getElementsByTagName('tbody')[0];
+async function index() {
+
+    var bodyElement = $('#tblBody');
 
     try {
-        var listUsers = await axios({
-            method: "GET",
-            url: "http://localhost:3000/user",
-        });
+        var listUsers = await axios.get(bookApi);
         listUsers = listUsers.data;
 
-        bodyElement.innerHTML = '';
-        for (const user of listUsers) {
-            bodyElement.innerHTML +=
-                `<tr align='center'>
-                    <td>${user.email}</td>
-                    <td><img src="avatar/${user.avatar ? user.avatar : 'No-Image.png'}"
+        var htmls = listUsers.map(function (user) {
+            return `<tr align='center'>
+                <td>${user.id}</td>
+                <td>${user.email}</td>
+                <td><img src="avatar/${user.avatar ? user.avatar : 'No-Image.png'}"
                     alt="Không có hình ảnh" width="100px" height="100px" /></td>
-                    <td>${user.fullname}</td>
-                    <td>
-                        <button onclick="onUpdate('${user.id}')">Sửa</button>
-                        <button onclick="onDelete('${user.id}')">Xóa</button>
-                    </td>
-                </tr>`;
-        }
-    } catch (error) {
-        var errorElement = document.getElementById('error');
-        errorElement.innerText = 'Xảy ra lỗi: ' + error;
-        Object.assign(errorElement.style, {
-            display: 'block',
-            color: 'red',
-            fontStyle: 'italic',
-            fontWeight: 'bold',
-            backgroundColor: 'yellow'
+                <td>${user.fullname}</td>
+                <td>
+                    <button onclick="onUpdate('${user.id}')">Sửa</button>
+                    <button onclick="onDelete('${user.id}')">Xóa</button>
+                </td>
+            </tr>`
         })
+        bodyElement.html(htmls.join(''));
+    } catch (error) {
+        var errorElement = $('#error');
+        errorElement.text('Xảy ra lỗi khi lấy dữ liệu!');
+        errorElement.attr('style', 'color: red; font-style: italic;');
     }
 }
 
@@ -47,9 +39,29 @@ async function onDelete(id) {
     if (confirm('Bạn có chắc muốn xóa không?')) {
         await axios({
             method: "DELETE",
-            url: `http://localhost:3000/user/delete/${id}`,
-            headers: { "Content-Type": "application/json" },
+            url: bookApi + '/' + id
         });
-        index();
+        location = 'index.html?msg=3';
     }
+}
+
+function getParameterByName(name, url = location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+var msg = getParameterByName('msg');
+
+var msgElement = $('#msg');
+$(msgElement).attr('style', 'color: green; font-style: italic;');
+if (msg === '1') {
+    msgElement.text('Đã thêm thành công!');
+} else if (msg === '2') {
+    msgElement.text('Đã sửa thành công!');
+} else if (msg === '3') {
+    msgElement.text('Đã xóa thành công!');
 }

@@ -13,23 +13,37 @@
         <div class="w3agile-border">
             <h2>Register Form | VinaEnter Edu</h2>
             <div class="login-main login-agileits">
-                <p style="display: none;" id="error"></p>
+                <p id="error"></p>
                 <h1>Register</h1>
                 <form id="register-form">
-                    <label>Email (*)</label>
-                    <input type="text" placeholder="example@gmail.com" name="email" value="" />
-                    <label>Password (*)</label>
-                    <input type="password" placeholder="Password" name="password" />
-                    <label>Fullname</label>
-                    <input type="text" placeholder="Fullname" name="fullname" />
-                    <label>Avatar</label>
-                    <input type="file" class="input-file" />
+                    <div>
+                        <label>Email (*)</label>
+                        <input type="text" placeholder="example@gmail.com" name="email" />
+                        <span></span>
+                    </div>
+                    <div>
+                        <label>Password (*)</label>
+                        <input type="password" placeholder="Password" name="password" />
+                        <span></span>
+                    </div>
+                    <div>
+                        <label>Fullname</label>
+                        <input type="text" placeholder="Fullname" name="fullname" />
+                        <span></span>
+                    </div>
+
+                    <div>
+                        <label>Avatar</label>
+                        <input type="file" class="input-file" />
+
+                    </div>
 
                     <input type="submit" value="Register">
                 </form>
             </div>
         </div>
     </div>
+    <script src="lib/jquery-3.6.3.min.js"></script>
     <script src="lib/axios.min.js"></script>
     <script src="js/register.js"></script>
 </body>
