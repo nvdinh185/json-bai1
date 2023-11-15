@@ -23,7 +23,7 @@ async function index() {
     } catch (error) {
         var errorElement = $('#error');
         errorElement.text('Xảy ra lỗi khi lấy dữ liệu!');
-        errorElement.attr('style', 'display: block; color: red; font-style: italic;');
+        errorElement.attr('style', 'color: red; font-style: italic;');
     }
 }
 
@@ -39,6 +39,27 @@ async function onDelete(id) {
             method: "DELETE",
             url: bookApi + '/' + id
         });
-        index();
+        location = 'index.html?msg=3';
     }
+}
+
+function getParameterByName(name, url = location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+var msg = getParameterByName('msg');
+
+var msgElement = $('#msg');
+$(msgElement).attr('style', 'color: green; font-style: italic;');
+if (msg === '1') {
+    msgElement.text('Đã thêm thành công!');
+} else if (msg === '2') {
+    msgElement.text('Đã sửa thành công!');
+} else if (msg === '3') {
+    msgElement.text('Đã xóa thành công!');
 }

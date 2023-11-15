@@ -33,7 +33,7 @@ async function getUserById() {
     } catch (error) {
         var errorElement = $('#error');
         $(errorElement).text('Xảy ra lỗi khi lấy dữ liệu để sửa!');
-        $(errorElement).attr('style', 'display: block; color: red; font-style: italic;');
+        $(errorElement).attr('style', 'color: red; font-style: italic;');
     }
 }
 
@@ -59,10 +59,10 @@ form.on('submit', async function (e) {
 
         //handle success
         // console.log('results: ', results);
-        location = 'index.html';
+        location = 'index.html?msg=2';
     } catch (error) {
         var errorElement = $('#error');
         $(errorElement).text('Xảy ra lỗi khi sửa!');
-        $(errorElement).attr('style', 'display: block; color: red; font-style: italic;');
+        $(errorElement).attr('style', 'color: red; font-style: italic;');
     }
 })
