@@ -37,11 +37,17 @@ function onUpdate(id) {
 
 async function onDelete(id) {
     if (confirm('Bạn có chắc muốn xóa không?')) {
-        await axios({
-            method: "DELETE",
-            url: bookApi + '/' + id
-        });
-        location = 'index.html?msg=3';
+        try {
+            await axios({
+                method: "DELETE",
+                url: bookApi + '/' + id
+            });
+            location = 'index.html?msg=3';
+        } catch (error) {
+            var errorElement = $('#error');
+            errorElement.text('Xảy ra lỗi khi xóa!');
+            errorElement.attr('style', 'color: red; font-style: italic;');
+        }
     }
 }
 
