@@ -79,14 +79,14 @@ class UserController {
 
     // [PUT] /user/update
     async postUpdate(req, res, next) {
-        var { id, email, fullname, file } = req.form_data;
+        var { id, email, password, fullname, file } = req.form_data;
         // Nếu có chọn ảnh thì update ảnh, nếu không thì lấy lại ảnh cũ
-        var avatarSql = file ? `avatar = "${file}"` : `avatar = avatar`;
+        var avatarSql = file ? `avatar = "${file}"` : 'avatar = avatar';
         try {
             var conn = mysql.createConnection(configDB);
 
             await new Promise((resolve, reject) => {
-                conn.query(`UPDATE users2 SET email = '${email}', fullname = '${fullname}',
+                conn.query(`UPDATE users2 SET email = '${email}',password = '${password}', fullname = '${fullname}',
                 ${avatarSql} WHERE id = '${id}'`, (err, results) => {
                     if (err) reject(err);
                     resolve(results);
