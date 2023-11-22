@@ -13,16 +13,18 @@
 		<div class="w3agile-border">
 			<h2>Trang quản trị viên | VinaEnter Edu</h2>
 			<div class="login-main login-agileits">
-				<p style="display: none;" id="error"></p>
+				<p id="error"></p>
+				<p id="msg"></p>
 				<div class="userinfo">
 					<p class="fullname" id="greeting"></p>
 					<p class="link"><a href="javascript:void(0)" title="Đăng xuất" id="logout">Đăng xuất</a></p>
 				</div>
+
 				<h1>Danh sách người dùng</h1>
-				<table class="index-user" border="1" align="center" id="tbl">
+				<table class="index-user" border="1" align="center">
 					<thead>
 						<tr align="center">
-							<th>Id</th>
+							<th>ID</th>
 							<th>Email</th>
 							<th>Avatar</th>
 							<th>Fullname</th>
@@ -30,12 +32,13 @@
 						</tr>
 					</thead>
 
-					<tbody>
+					<tbody id="tblBody">
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
+	<script src="lib/jquery-3.6.3.min.js"></script>
 	<script src="lib/axios.min.js"></script>
 	<script src="js/index.js"></script>
 </body>

@@ -8,7 +8,7 @@ router.get('/', middleware.authorize, userController.getListUsers);
 router.get('/:id', middleware.authorize, userController.getUserById);
 
 router.post('/login', userController.postLogin);
-router.put('/update', middleware.authorize, middleware.uploadFile, userController.postUpdate);
-router.delete('/delete/:id', middleware.authorize, userController.postDelete);
+router.put('/:id', middleware.authorize, middleware.uploadFile, userController.postUpdate);
+router.delete('/:id', middleware.authorize, userController.postDelete);
 
 module.exports = router;

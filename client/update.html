@@ -2,21 +2,19 @@
 <html>
 
 <head>
-	<title>CPANEL | VinaEnter Edu</title>
+	<title>Form User | VinaEnter Edu</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
+	<!-- login starts here -->
 	<div class="login agile">
 		<div class="w3agile-border">
 			<h2>TRANG QUẢN TRỊ VIÊN | CẬP NHẬT THÔNG TIN NGƯỜI DÙNG</h2>
 			<div class="login-main login-agileits">
-				<p style="display: none;" id="error"></p>
-				<div class="userinfo" style="margin-bottom:20px;">
-					<p class="fullname" id="fullname"></p>
-				</div>
+				<p id="error"></p>
 
 				<form action="" id="update-form">
 					<input type="hidden" name="id">
@@ -24,14 +22,21 @@
 						<tr align="center">
 							<td>Email</td>
 							<td colspan="2">
-								<input type="text" value="" name="email" class="input-u" />
+								<input type="text" name="email" class="input-u" />
+							</td>
+						</tr>
+
+						<tr align="center">
+							<td>Password</td>
+							<td colspan="2">
+								<input type="text" name="password" class="input-u" />
 							</td>
 						</tr>
 
 						<tr align="center">
 							<td>Fullname</td>
 							<td colspan="2">
-								<input type="text" value="" name="fullname" class="input-u" />
+								<input type="text" name="fullname" class="input-u" />
 							</td>
 						</tr>
 
@@ -45,13 +50,14 @@
 
 						<tr align="center">
 							<td>&nbsp;</td>
-							<td colspan="2"><button> Cập nhật thông tin</button></td>
+							<td colspan="2"><button>Cập nhật thông tin</button></td>
 						</tr>
 					</table>
 				</form>
 			</div>
 		</div>
 	</div>
+	<script src="lib/jquery-3.6.3.min.js"></script>
 	<script src="lib/axios.min.js"></script>
 	<script src="js/update.js"></script>
 </body>

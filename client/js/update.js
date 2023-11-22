@@ -1,3 +1,6 @@
+const bookApi = 'http://localhost:3000/user';
+
+var form = $('#update-form');
 var currentUser = localStorage.getItem('currentUser');
 currentUser = JSON.parse(currentUser);
 if (currentUser) {
@@ -10,73 +13,75 @@ if (currentUser) {
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    var id = getParameterByName('id');
-    // lấy thông tin user muốn sửa để điền vào form sửa
-    async function getUserById(userId) {
-        var userById = await axios({
-            method: "GET",
-            url: `http://localhost:3000/user/${userId}`,
-            headers: { Authorization: `Bearer ${currentUser.token}` },
-        });
-        userById = userById.data;
+    var edId = getParameterByName('id');
 
-        var fullnameElement = document.getElementById('fullname');
-        fullnameElement.innerText = 'Cập nhật thông tin cho : ' + userById.fullname;
-
-        var id = form.querySelector('input[name="id"]');
-        id.value = userById.id;
-
-        var email = form.querySelector('input[name="email"]');
-        email.value = userById.email;
-
-        var fullname = form.querySelector('input[name="fullname"]');
-        fullname.value = userById.fullname;
-
-        var avatar = form.querySelector('#avatar');
-        avatar.src = `avatar/${userById.avatar}`;
-    }
-    getUserById(id);
-
-    var form = document.forms['update-form'];
-    // Xử lý sửa user
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-
-        const formData = new FormData();
-        for (const el of e.target) {
-            if (el.files) {
-                formData.append("file", el.files[0]);
-            } else if (el.name) {
-                formData.append(el.name, el.value);
-            }
-        }
+    async function getUserById() {
         try {
-            var results = await axios({
-                method: "PUT",
-                url: "http://localhost:3000/user/update",
-                data: formData,
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${currentUser.token}`
-                },
+            var userById = await axios({
+                method: "GET",
+                url: bookApi + '/' + edId,
+                headers: { Authorization: `Bearer ${currentUser.token}` },
             });
+            userById = userById.data;
 
-            //handle success
-            // console.log('results: ', results);
-            location = 'index.html';
+            var id = $('input[name="id"]');
+            id.val(userById.id);
+
+            var email = $('input[name="email"]');
+            email.val(userById.email);
+
+            var password = $('input[name="password"]');
+            password.val(userById.password);
+
+            var fullname = $('input[name="fullname"]');
+            fullname.val(userById.fullname);
+
+            var avatar = $("#avatar");
+            avatar.attr('src', `avatar/${userById.avatar}`);
+
         } catch (error) {
-            var errorElement = document.getElementById('error');
-            errorElement.innerText = 'Xảy ra lỗi: ' + error;
-            Object.assign(errorElement.style, {
-                display: 'block',
-                color: 'red',
-                fontStyle: 'italic',
-                fontWeight: 'bold',
-                backgroundColor: 'yellow'
-            })
+            console.log(error);
+            var errorElement = $('#error');
+            $(errorElement).text('Xảy ra lỗi khi lấy dữ liệu để sửa!');
+            $(errorElement).attr('style', 'color: red; font-style: italic;');
         }
-    })
+    }
+
+    getUserById();
 } else {
     // Nếu chưa đăng nhập thì chuyển hướng sang trang login.html
     location = 'login.html';
 }
+
+form.on('submit', async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    for (const el of e.target) {
+        if (el.files) {
+            formData.append("file", el.files[0]);
+        } else if (el.name) {
+            formData.append(el.name, el.value);
+        }
+    }
+
+    try {
+        var results = await axios({
+            method: "PUT",
+            url: bookApi + '/' + edId,
+            data: formData,
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${currentUser.token}`
+            },
+        });
+
+        //handle success
+        // console.log('results: ', results);
+        location = 'index.html?msg=2';
+    } catch (error) {
+        var errorElement = $('#error');
+        $(errorElement).text('Xảy ra lỗi khi sửa!');
+        $(errorElement).attr('style', 'color: red; font-style: italic;');
+    }
+})
